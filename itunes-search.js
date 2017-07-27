@@ -1,6 +1,7 @@
 "use strict"
 
 function searchItunes(){
+	clearResultBox();
 	var userSearchRequest;
 	userSearchRequest = document.getElementById('searchBox').value;
 	var refinedSearch;
@@ -10,14 +11,18 @@ function searchItunes(){
 	else{
 		refinedSearch = userSearchRequest;
 	}
-	fetch('https://itunes.apple.com/search?term=' + refinedSearch + "&limit=200")
-		.then((resp)=> resp.json())
-		.then(function(data) {
-			console.log(data);
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+  			var data =  JSON.parse(this.response);
+    		console.log(data);
 			var bySongs = filterForSongs(data);
-			getAlbums(bySongs);
-	});
-	
+			var sortedResults = getAlbums(bySongs);
+			displayResults(sortedResults);
+  		}
+		};
+	xhttp.open("GET", "https://itunes.apple.com/search?term=" + refinedSearch + "&limit=200", true);
+	xhttp.send();
 }
 
 function filterForSongs(data) {
@@ -49,14 +54,6 @@ function checkForSpaces(userSearchRequest){
 	}
 }
 
-$(".resultBox").scroll(function(){
-  var sticky = $('.sticky'),
-      scroll = $('.resultBox').scrollTop();
-
-  if (scroll >= 100) sticky.addClass('fixed');
-  else sticky.removeClass('fixed');
-});
-
 function getAlbums(results){
 	var albumList = [];
 	var songsSortedByAlbum = [];
@@ -79,8 +76,13 @@ function getAlbums(results){
 }
 	return songsSortedByAlbum;
 }
+function clearResultBox(){
+	var resultBox = document.getElementById("resultBox");
+	while (resultBox.firstChild) {
+   		resultBox.removeChild(resultBox.firstChild);
+	}
+}
 function displayResults(songsSortedByAlbum){
-	var songsSortedByAlbum = getAlbums(results);
 	var resultBox = document.getElementById("resultBox")
 	for (var albumName in songsSortedByAlbum) {
    		var newElement = document.createElement('div');
