@@ -106,4 +106,3 @@ function displayResults(songsSortedByAlbum){
  		resultBox.appendChild(newList)
   	}
 }
-
