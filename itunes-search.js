@@ -44,7 +44,6 @@ function refineSearch(searchInput){
 	rejoinedSearch = seperatedSearch.join("+");
 	return rejoinedSearch;
 }
-
 function checkForSpaces(userSearchRequest){
 	if(userSearchRequest.search(" ")>=0){
 		return true;
@@ -86,23 +85,27 @@ function displayResults(songsSortedByAlbum){
 	var resultBox = document.getElementById("resultBox")
 	for (var albumName in songsSortedByAlbum) {
 		var newImage = document.createElement('div');
-		newImage.className = "albumThumbnail";
-		newImage.innerHTML = "<img  src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">";
+		newImage.className = "albumHeader";
+		newImage.innerHTML = "<img class=\"albumThumbnail\" src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">";
 		resultBox.appendChild(newImage);
    		var newElement = document.createElement('div');
     	newElement.id = songsSortedByAlbum[albumName]; 
     	newElement.className = "album";
-    	newElement.innerHTML = songsSortedByAlbum[albumName][0].collectionName +" - "+ songsSortedByAlbum[albumName][0].artistName ;
-    	resultBox.appendChild(newElement);
+    	newElement.innerHTML = "<center>" + songsSortedByAlbum[albumName][0].collectionName +" - "+ songsSortedByAlbum[albumName][0].artistName+"</center>" ;
+    	newImage.appendChild(newElement);
     	var newList = document.createElement("ul");
     	newList.className =  "trackList";
     	for (var track in songsSortedByAlbum[albumName]){
     		var newTrack = document.createElement("li");
     		newTrack.className = "track";
     		newTrack.innerHTML = songsSortedByAlbum[albumName][track].trackNumber +".  " + songsSortedByAlbum[albumName][track].trackName
-    		resultBox.appendChild(newTrack);
+    		newImage.appendChild(newTrack);
 
     	}
- 		resultBox.appendChild(newList)
+ 		newImage.appendChild(newList)
   	}
+}
+function callSearch(){
+	searchItunes();
+	return false;
 }
