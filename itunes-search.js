@@ -1,6 +1,7 @@
 "use strict"
 
 function searchItunes(){
+	clearResultBox();
 	var userSearchRequest;
 	userSearchRequest = document.getElementById('searchBox').value;
 	var refinedSearch;
@@ -10,14 +11,18 @@ function searchItunes(){
 	else{
 		refinedSearch = userSearchRequest;
 	}
-	fetch('https://itunes.apple.com/search?term=' + refinedSearch + "&limit=200")
-		.then((resp)=> resp.json())
-		.then(function(data) {
-			console.log(data);
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+  			var data =  JSON.parse(this.response);
+    		console.log(data);
 			var bySongs = filterForSongs(data);
-			getAlbums(bySongs);
-	});
-	
+			var sortedResults = getAlbums(bySongs);
+			displayResults(sortedResults);
+  		}
+		};
+	xhttp.open("GET", "https://itunes.apple.com/search?term=" + refinedSearch + "&limit=200", true);
+	xhttp.send();
 }
 
 function filterForSongs(data) {
@@ -48,6 +53,7 @@ function checkForSpaces(userSearchRequest){
 		return false;
 	}
 }
+
 /*
 $(".resultBox").scroll(function(){
   var sticky = $('.sticky'),
@@ -60,7 +66,7 @@ $(".resultBox").scroll(function(){
 function getAlbums(results){
 	var albumList = [];
 	var songsSortedByAlbum = [];
-	var album;
+	var album = [];
 	for (var i = 0; i < results.length; i++) {
 		if(!(albumList.includes(results[i].collectionName))){
 			albumList.push(results[i].collectionName);
@@ -75,12 +81,31 @@ function getAlbums(results){
 				return false;
 			}
 	});
-	songsSortedByAlbum.push(album);
+	songsSortedByAlbum.push(sortingSongsInAlbums(album));
 }
 	return songsSortedByAlbum;
 }
+
+function checkForDuplicate () {
+
+}
+
+function sortingSongsInAlbums(album){
+	var sortedSongs = [];
+	sortedSongs = album.sort(function(a, b){
+		return a.trackNumber - b.trackNumber;
+	})
+
+	return sortedSongs;
+}
+
+function clearResultBox(){
+	var resultBox = document.getElementById("resultBox");
+	while (resultBox.firstChild) {
+   		resultBox.removeChild(resultBox.firstChild);
+	}
+}
 function displayResults(songsSortedByAlbum){
-	var songsSortedByAlbum = getAlbums(results);
 	var resultBox = document.getElementById("resultBox")
 	for (var albumName in songsSortedByAlbum) {
    		var newElement = document.createElement('div');
