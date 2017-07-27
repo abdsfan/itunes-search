@@ -88,7 +88,7 @@ function displayResults(songsSortedByAlbum){
    		var newElement = document.createElement('div');
     	newElement.id = songsSortedByAlbum[albumName]; 
     	newElement.className = "album";
-    	newElement.innerHTML = songsSortedByAlbum[albumName][0].collectionName;
+    	newElement.innerHTML = "<img src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">" + songsSortedByAlbum[albumName][0].collectionName;
     	resultBox.appendChild(newElement);
     	var newList = document.createElement("ul");
     	newList.className =  "trackList";

@@ -17,3 +17,8 @@
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
 }
+.album{
+	font-size: 20px;
+	color: grey;
+	padding-left: 10px;
+}
