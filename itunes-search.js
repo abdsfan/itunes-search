@@ -20,6 +20,8 @@ function searchItunes(){
 			var sortedResults = getAlbums(bySongs);
 			displayResults(sortedResults);
   		}
+  		else if(this.readyState == 4 && this.status != 200)
+  			document.getElementById("resultBox").innerHTML = "No search results found";
 		};
 	xhttp.open("GET", "https://itunes.apple.com/search?term=" + refinedSearch + "&limit=200", true);
 	xhttp.send();
