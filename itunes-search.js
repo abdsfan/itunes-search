@@ -1,10 +1,14 @@
 "use strict"
 
+/*
+the function resets the webpage, connect to itunes API server to get a response,
+calls other functions to manipulate the data then display the results. 
+*/
 function searchItunes(){
 	clearResultBox();
 	var userSearchRequest;
-	userSearchRequest = document.getElementById('searchBox').value;
 	var refinedSearch;
+	userSearchRequest = document.getElementById('searchBox').value;
 	if(checkForSpaces(userSearchRequest)){
 	refinedSearch = refineSearch(userSearchRequest);
 	}
@@ -25,6 +29,9 @@ function searchItunes(){
 	xhttp.send();
 }
 
+/*
+The function will collect anything that is a song from the results
+*/
 function filterForSongs(data) {
 	var bySongs = data.results.filter(function(element){
 		if (element.kind === "song") {
@@ -36,7 +43,9 @@ function filterForSongs(data) {
 	return bySongs;
 }
 
-
+/*
+The function will delete spaces from input and add '+' sign to the user search input
+*/
 function refineSearch(searchInput){
 	var seperatedSearch;
 	var rejoinedSearch;
@@ -45,6 +54,9 @@ function refineSearch(searchInput){
 	return rejoinedSearch;
 }
 
+/*
+The function will check if the user enters any spaces in the search
+*/
 function checkForSpaces(userSearchRequest){
 	if(userSearchRequest.search(" ")>=0){
 		return true;
@@ -62,6 +74,10 @@ $(".resultBox").scroll(function(){
   if (scroll >= 100) sticky.addClass('fixed');
   else sticky.removeClass('fixed');
 });
+*/
+
+/*
+The function will package the results by albums
 */
 function getAlbums(results){
 	var albumList = [];
@@ -82,29 +98,57 @@ function getAlbums(results){
 			}
 	});
 	songsSortedByAlbum.push(sortingSongsInAlbums(album));
-}
+	}
 	return songsSortedByAlbum;
 }
 
-function checkForDuplicate () {
+/*
+The function will check for duplicate songs in the album 
+*/
+function checkForDuplicate (sortedSongs) {
+	var tempEliminateDublicateSongs = [];
+	var eliminateDublicateSongs = [];
+	var songTrackingNumber = sortedSongs.map(function(element) {
+		return element.trackNumber;
+	});
+	
+	eliminateDublicateSongs = sortedSongs.filter(function(element){
+		if(!(tempEliminateDublicateSongs.includes(element.trackNumber))) {
+			tempEliminateDublicateSongs.push(element.trackNumber);
+			return true;
+		} else {
+			return false; 
+		}
+	});
 
+	return eliminateDublicateSongs;
 }
 
+/*
+The funciton wills ort the songs in the album 
+*/
 function sortingSongsInAlbums(album){
 	var sortedSongs = [];
 	sortedSongs = album.sort(function(a, b){
 		return a.trackNumber - b.trackNumber;
 	})
-
-	return sortedSongs;
+	
+	return checkForDuplicate(sortedSongs);
 }
 
+/*
+The function will reset the result box if it has any contect 
+*/
 function clearResultBox(){
 	var resultBox = document.getElementById("resultBox");
 	while (resultBox.firstChild) {
    		resultBox.removeChild(resultBox.firstChild);
 	}
 }
+
+/*
+The function will output the albums with the sons associated to the albums on the webpage.
+*/
 function displayResults(songsSortedByAlbum){
 	var resultBox = document.getElementById("resultBox")
 	for (var albumName in songsSortedByAlbum) {
