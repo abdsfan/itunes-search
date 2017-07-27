@@ -85,17 +85,21 @@ function clearResultBox(){
 function displayResults(songsSortedByAlbum){
 	var resultBox = document.getElementById("resultBox")
 	for (var albumName in songsSortedByAlbum) {
+		var newImage = document.createElement('div');
+		newImage.className = "albumThumbnail";
+		newImage.innerHTML = "<img  src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">";
+		resultBox.appendChild(newImage);
    		var newElement = document.createElement('div');
     	newElement.id = songsSortedByAlbum[albumName]; 
     	newElement.className = "album";
-    	newElement.innerHTML = "<img src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">" + songsSortedByAlbum[albumName][0].collectionName;
+    	newElement.innerHTML = songsSortedByAlbum[albumName][0].collectionName +" - "+ songsSortedByAlbum[albumName][0].artistName ;
     	resultBox.appendChild(newElement);
     	var newList = document.createElement("ul");
     	newList.className =  "trackList";
     	for (var track in songsSortedByAlbum[albumName]){
     		var newTrack = document.createElement("li");
     		newTrack.className = "track";
-    		newTrack.innerHTML = songsSortedByAlbum[albumName][track].trackName
+    		newTrack.innerHTML = songsSortedByAlbum[albumName][track].trackNumber +".  " + songsSortedByAlbum[albumName][track].trackName
     		resultBox.appendChild(newTrack);
 
     	}
