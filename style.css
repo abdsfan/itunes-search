@@ -1,6 +1,6 @@
 .resultBox{
 	align-self: right;
-	height: 80vh;
+	height: 100vh;
 	width: 60vw;
 	max-width:  580px;
 	overflow-y: auto;
@@ -16,4 +16,27 @@
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
+}
+.album{
+	line-height: 60%;
+	display: inline;
+	font-size: 20px;
+	color: grey;
+	padding-left: 10px;
+}
+.albumThumbnail{
+
+	padding-right:10px;
+}
+.trackList{
+	position: relative;
+	right: 100px;
+	bottom: 300px;
+	list-style: none;
+	padding-left: 0px;
+	margin-bottom: 20px;
+}
+.track{
+	list-style: none;
+	padding-left: 30px
 }
