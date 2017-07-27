@@ -1,7 +1,7 @@
 .resultBox{
 	align-self: right;
 	height: 100vh;
-	width: 60vw;
+	width: 80vw;
 	max-width:  580px;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -18,25 +18,31 @@
     background: transparent;  /* optional: just make scrollbar invisible */
 }
 .album{
+	padding-bottom: 50px;
+	float: right;
+	width: 100%
 	line-height: 60%;
 	display: inline;
 	font-size: 20px;
 	color: grey;
-	padding-left: 10px;
+
 }
 .albumThumbnail{
 
+	padding-bottom: 10px;
 	padding-right:10px;
 }
-.trackList{
-	position: relative;
-	right: 100px;
-	bottom: 300px;
-	list-style: none;
-	padding-left: 0px;
-	margin-bottom: 20px;
+.albumHeader{
+	padding-top: 20px;
+	border-bottom-style:  solid;
+	overflow: visible;
+	padding-bottom: 20px;
+	border-bottom-width: 3px;
+	border-bottom-color: #cccccc;
 }
 .track{
+	position: relative;
+	left: 100px;
 	list-style: none;
 	padding-left: 30px
 }
