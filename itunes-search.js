@@ -48,7 +48,8 @@ function getAlbums(bySongs){
             else{
                 return false;
             }
-    });
+    	});
+    }
     songsSortedByAlbum.push(album);
 }
 
@@ -69,6 +70,7 @@ function refineSearch(searchInput){
 	rejoinedSearch = seperatedSearch.join("+");
 	return rejoinedSearch;
 }
+
 function checkForSpaces(userSearchRequest){
 	if(userSearchRequest.search(" ")>=0){
 		return true;
@@ -77,3 +79,5 @@ function checkForSpaces(userSearchRequest){
 		return false;
 	}
 }
+
+
