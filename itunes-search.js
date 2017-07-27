@@ -30,6 +30,8 @@ function filterForSongs(data) {
 	});
 	return bySongs;
 }
+
+
 function refineSearch(searchInput){
 	var seperatedSearch;
 	var rejoinedSearch;
@@ -37,6 +39,7 @@ function refineSearch(searchInput){
 	rejoinedSearch = seperatedSearch.join("+");
 	return rejoinedSearch;
 }
+
 function checkForSpaces(userSearchRequest){
 	if(userSearchRequest.search(" ")>=0){
 		return true;
@@ -45,6 +48,7 @@ function checkForSpaces(userSearchRequest){
 		return false;
 	}
 }
+
 $(".resultBox").scroll(function(){
   var sticky = $('.sticky'),
       scroll = $('.resultBox').scrollTop();
@@ -52,6 +56,7 @@ $(".resultBox").scroll(function(){
   if (scroll >= 100) sticky.addClass('fixed');
   else sticky.removeClass('fixed');
 });
+
 function getAlbums(results){
 	var albumList = [];
 	var songsSortedByAlbum = [];
@@ -95,3 +100,4 @@ function displayResults(songsSortedByAlbum){
  		resultBox.appendChild(newList)
   	}
 }
+
