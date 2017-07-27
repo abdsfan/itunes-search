@@ -63,12 +63,26 @@ function getAlbums(results){
 	});
 	songsSortedByAlbum.push(album);
 }
-function generateUserDisplay(sortedSongs){
-var resultBox = document.getElementById("resultBox")
-for (var albumName in songsSortedByAlbum) {
-    var newElement = document.createElement('div');
-    newElement.id = songsSortedByAlbum[albumName]; newElement.className = "album";
-    newElement.innerHTML = songsSortedByAlbum[albumName][0].collectionName;
-    document.body.appendChild(newElement);
-	}
+	return songsSortedByAlbum;
+}
+function displaySearchResults(songsSortedByAlbum){
+	var songsSortedByAlbum = getAlbums(results);
+	var resultBox = document.getElementById("resultBox")
+	for (var albumName in songsSortedByAlbum) {
+   		var newElement = document.createElement('div');
+    	newElement.id = songsSortedByAlbum[albumName]; 
+    	newElement.className = "album";
+    	newElement.innerHTML = songsSortedByAlbum[albumName][0].collectionName;
+    	document.body.appendChild(newElement);
+    	var newList = document.createElement("ul");
+    	newList.className =  "trackList";
+    	for (var track in songsSortedByAlbum[albumName]){
+    		var newTrack = document.createElement("li");
+    		newTrack.className = "track";
+    		newTrack.innerHTML = songsSortedByAlbum[albumName][track].trackName
+    		document.body.appendChild(newTrack);
+
+    	}
+ 		document.body.appendChild(newList)
+  	}
 }
