@@ -1,0 +1,19 @@
+.resultBox{
+	align-self: right;
+	height: 80vh;
+	width: 60vw;
+	max-width:  580px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.fixed{
+	position: absolute;
+	top: 0;
+	z-index: 100;
+	width: 90%;
+	max-width: 500px;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
