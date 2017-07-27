@@ -48,7 +48,7 @@ function checkForSpaces(userSearchRequest){
 		return false;
 	}
 }
-
+/*
 $(".resultBox").scroll(function(){
   var sticky = $('.sticky'),
       scroll = $('.resultBox').scrollTop();
@@ -56,7 +56,7 @@ $(".resultBox").scroll(function(){
   if (scroll >= 100) sticky.addClass('fixed');
   else sticky.removeClass('fixed');
 });
-
+*/
 function getAlbums(results){
 	var albumList = [];
 	var songsSortedByAlbum = [];
