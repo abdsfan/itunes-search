@@ -20,6 +20,7 @@ function searchItunes(){
   		if (this.readyState == 4 && this.status == 200) {
   			var data =  JSON.parse(this.response);
     		console.log(data);
+    		data.resultCount === 0 ? alert("No Results Found Try Another Search") : console.log();
 			var bySongs = filterForSongs(data);
 			var sortedResults = getAlbums(bySongs);
 			displayResults(sortedResults);
@@ -150,7 +151,7 @@ function displayResults(songsSortedByAlbum){
     	resultBox.appendChild(newElement);
     	var newImage = document.createElement('div');
 		newImage.className = "albumHeader";
-		newImage.innerHTML = "<img class=\"albumThumbnail\" src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">";
+		newImage.innerHTML = "<a href=\""+songsSortedByAlbum[albumName][0].collectionViewUrl + "\" target=\"_blank\"><img class=\"albumThumbnail\" src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + "></a>";
 		resultBox.appendChild(newImage);
     	var newList = document.createElement("ul");
     	newList.className =  "trackList";
