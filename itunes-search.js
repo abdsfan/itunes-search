@@ -161,8 +161,9 @@ function displayResults(songsSortedByAlbum){
 		resultBox.appendChild(newImage);
    		var newElement = document.createElement('div');
     	newElement.id = songsSortedByAlbum[albumName]; 
+    	songsSortedByAlbum[albumName][0].collectionName.length >= 45 ? songsSortedByAlbum[albumName][0].collectionName = songsSortedByAlbum[albumName][0].collectionName.substring(0,45): console.log("cool");
     	newElement.className = "album";
-    	newElement.innerHTML = "<center>" + songsSortedByAlbum[albumName][0].collectionName +" - "+ songsSortedByAlbum[albumName][0].artistName+"</center>" ;
+    	newElement.innerHTML = "<right>" + songsSortedByAlbum[albumName][0].collectionName +" <br> "+ songsSortedByAlbum[albumName][0].artistName+"</right>" ;
     	newImage.appendChild(newElement);
     	var newList = document.createElement("ul");
     	newList.className =  "trackList";
