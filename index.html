@@ -8,11 +8,23 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+	<header>
+		<div class="container">
+			<div class="row" style="background-color: #ff9f80;">
+				<div class="col-xs-6">
+					<h1 style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Abdullah x Nathan</h1>
+				</div>
+				<div class="col-xs-6">
+					<h3>Itunes Search</h3>
+				</div>
+			</div>
+		</div>
+	</header>
 	<div class="container">
 		<div class="row" style="background-color: pink; height: 100vh;">
 			<div class="col-xs-4">
-				<form onsubmit="return callSearch()">
-					Search: <input id="searchBox" type="text" name="searchbox">
+				<form class="searchDiv" onsubmit="return callSearch()">
+					Search for music: <br><input id="searchBox" type="text" name="searchbox">
 					<button onclick="callSearch()">Search</button>
 				</form>
 			</div>
