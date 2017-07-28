@@ -20,10 +20,13 @@ function searchItunes(){
   		if (this.readyState == 4 && this.status == 200) {
   			var data =  JSON.parse(this.response);
     		console.log(data);
+    		data.resultCount === 0 ? alert("No Results Found Try Another Search") : console.log();
 			var bySongs = filterForSongs(data);
 			var sortedResults = getAlbums(bySongs);
 			displayResults(sortedResults);
   		}
+  		else if(this.readyState == 4 && this.status != 200)
+  			document.getElementById("resultBox").innerHTML = "No search results found";
 		};
 	xhttp.open("GET", "https://itunes.apple.com/search?term=" + refinedSearch + "&limit=200", true);
 	xhttp.send();
@@ -66,20 +69,6 @@ function checkForSpaces(userSearchRequest){
 		return false;
 	}
 }
-
-/*
-$(".resultBox").scroll(function(){
-  var sticky = $('.sticky'),
-      scroll = $('.resultBox').scrollTop();
-
-  if (scroll >= 100) sticky.addClass('fixed');
-  else sticky.removeClass('fixed');
-});
-*/
-
-/*
-The function will package the results by albums
-*/
 function getAlbums(results){
 	var albumList = [];
 	var songsSortedByAlbum = [];
@@ -153,15 +142,17 @@ The function will output the albums with the sons associated to the albums on th
 function displayResults(songsSortedByAlbum){
 	var resultBox = document.getElementById("resultBox")
 	for (var albumName in songsSortedByAlbum) {
-		var newImage = document.createElement('div');
-		newImage.className = "albumHeader";
-		newImage.innerHTML = "<img class=\"albumThumbnail\" src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + ">";
-		resultBox.appendChild(newImage);
    		var newElement = document.createElement('div');
     	newElement.id = songsSortedByAlbum[albumName]; 
+    	songsSortedByAlbum[albumName][0].collectionName.length >= 65 ? songsSortedByAlbum[albumName][0].collectionName = songsSortedByAlbum[albumName][0].collectionName.substring(0,65): console.log("cool");
+    	songsSortedByAlbum[albumName][0].artistName.length >= 65 ? songsSortedByAlbum[albumName][0].artistName = songsSortedByAlbum[albumName][0].collectionName.substring(0,65): console.log("cool");
     	newElement.className = "album";
-    	newElement.innerHTML = "<center>" + songsSortedByAlbum[albumName][0].collectionName +" - "+ songsSortedByAlbum[albumName][0].artistName+"</center>" ;
-    	newImage.appendChild(newElement);
+    	newElement.innerHTML = "<right>" + songsSortedByAlbum[albumName][0].collectionName +" <br> "+ songsSortedByAlbum[albumName][0].artistName+"</right>" ;
+    	resultBox.appendChild(newElement);
+    	var newImage = document.createElement('div');
+		newImage.className = "albumHeader";
+		newImage.innerHTML = "<a href=\""+songsSortedByAlbum[albumName][0].collectionViewUrl + "\" target=\"_blank\"><img class=\"albumThumbnail\" src=" + songsSortedByAlbum[albumName][0].artworkUrl100 + "></a>";
+		resultBox.appendChild(newImage);
     	var newList = document.createElement("ul");
     	newList.className =  "trackList";
     	for (var track in songsSortedByAlbum[albumName]){
