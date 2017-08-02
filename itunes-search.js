@@ -7,14 +7,7 @@ calls other functions to manipulate the data then display the results.
 function searchItunes(){
 	clearResultBox();
 	var userSearchRequest;
-	var refinedSearch;
-	userSearchRequest = document.getElementById('searchBox').value;
-	if(checkForSpaces(userSearchRequest)){
-	refinedSearch = refineSearch(userSearchRequest);
-	}
-	else{
-		refinedSearch = userSearchRequest;
-	}
+	userSearchRequest = getUserInput();
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
   		if (this.readyState == 4 && this.status == 200) {
@@ -28,8 +21,20 @@ function searchItunes(){
   		else if(this.readyState == 4 && this.status != 200)
   			document.getElementById("resultBox").innerHTML = "No search results found";
 		};
-	xhttp.open("GET", "https://itunes.apple.com/search?term=" + refinedSearch + "&limit=200", true);
+	xhttp.open("GET", "https://itunes.apple.com/search?term=" + userSearchRequest + "&limit=200&id=1000l31002", true);
 	xhttp.send();
+}
+function getUserInput(){
+	var userSearchRequest;
+	var refinedSearch;
+	userSearchRequest = document.getElementById('searchBox').value;
+	if(checkForSpaces(userSearchRequest)){
+	refinedSearch = refineSearch(userSearchRequest);
+	}
+	else{
+		refinedSearch = userSearchRequest;
+	}
+	return refinedSearch;
 }
 
 /*
@@ -73,11 +78,7 @@ function getAlbums(results){
 	var albumList = [];
 	var songsSortedByAlbum = [];
 	var album = [];
-	for (var i = 0; i < results.length; i++) {
-		if(!(albumList.includes(results[i].collectionName))){
-			albumList.push(results[i].collectionName);
-		}
-	}
+	albumList = getAlbumList(results);
 	for (var i = 0; i < albumList.length; i++) {
 		album = results.filter(function(element){
 			if(element.collectionName === albumList[i]){
@@ -90,6 +91,15 @@ function getAlbums(results){
 	songsSortedByAlbum.push(sortingSongsInAlbums(album));
 	}
 	return songsSortedByAlbum;
+}
+function getAlbumList(results){
+	var albumList = [];
+		for (var i = 0; i < results.length; i++) {
+		if(!(albumList.includes(results[i].collectionName))){
+			albumList.push(results[i].collectionName);
+		}
+	}
+	return albumList;
 }
 
 /*
@@ -158,7 +168,7 @@ function displayResults(songsSortedByAlbum){
     	for (var track in songsSortedByAlbum[albumName]){
     		var newTrack = document.createElement("li");
     		newTrack.className = "track";
-    		newTrack.innerHTML = songsSortedByAlbum[albumName][track].trackNumber +".  " + songsSortedByAlbum[albumName][track].trackName
+    		newTrack.innerHTML = songsSortedByAlbum[albumName][track].trackNumber +".  " + songsSortedByAlbum[albumName][track].trackName + "<audio class=\'soundBite\' controls type=\"audio/m4a\" src=\'" +songsSortedByAlbum[albumName][track].previewUrl + "\' ></audio>"
     		newImage.appendChild(newTrack);
 
     	}
