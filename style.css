@@ -6,6 +6,10 @@
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+.soundBite{
+	height: 10px;
+	float: right;
+}
 #searchBox{
 	background-color: pink;
 }
